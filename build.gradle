@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -12,6 +12,24 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.jungsub.rc_management.RCManagement'
+}
+
+run{
+    standardInput = System.in
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            exclude '**/ChatParserHW5Test.java'
+        }
+    }
 }
 
 test {
