@@ -3,7 +3,6 @@ package com.jungsub.rc_management;
 import com.jungsub.rc_management.assets.CommandLineTable;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu {
     public static void getMenu() {
@@ -20,18 +19,16 @@ public class Menu {
     public static int getMenuId() {
         String number;
         int result;
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("메뉴를 입력해주세요 > ");
             try {
-                number = scanner.nextLine();
+                number = RCManagement.input.nextLine();
                 result = Integer.parseInt(number);
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("번호가 아닙니다.");
             }
         }
-        scanner.close();
         return result;
     }
 
@@ -39,19 +36,18 @@ public class Menu {
     public static Student addNewEntry() {
         String name, studentId, roomNumber, penaltyPoints;
         int rc;
-        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Name? ");
-        name = scanner.nextLine();
+        name = RCManagement.input.nextLine();
 
         System.out.print("StudentId? ");
-        studentId = scanner.nextLine();
+        studentId = RCManagement.input.nextLine();
 
         System.out.print("RoomNumber? ");
-        roomNumber = scanner.nextLine();
+        roomNumber = RCManagement.input.nextLine();
 
         System.out.print("PenaltyPoints? ");
-        penaltyPoints = scanner.nextLine();
+        penaltyPoints = RCManagement.input.nextLine();
 
         System.out.println("Select RC");
         for (int i = 0; i < RC.values().length; i++) {
@@ -60,7 +56,7 @@ public class Menu {
         while (true) {
             try {
                 System.out.print("숫자 입력? ");
-                rc = Integer.parseInt(scanner.nextLine());
+                rc = Integer.parseInt(RCManagement.input.nextLine());
                 if (rc > RC.values().length) {
                     System.out.println("범위 초과.");
                     continue;
@@ -70,22 +66,21 @@ public class Menu {
                 System.out.println("숫자가 아닙니다.");
             }
         }
-        scanner.close();
+        
         return new Student(name, studentId, roomNumber, penaltyPoints, "2021-2", RC.values()[rc]);
     }
 
     // 2번 기존 학생 확인
     public static Student checkStudent(ArrayList<Student> data) {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("학번 입력> ");
-        String studentId = scanner.nextLine();
+        RCManagement.input.next(); // Clear buffer
+        String studentId = RCManagement.input.nextLine();
 
         Student student = Student.getStudent(data, studentId);
 
         if (student == null) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
         }
-        scanner.close();
 
         // 출력
         CommandLineTable st = new CommandLineTable();
@@ -98,9 +93,9 @@ public class Menu {
 
     // 3번 학생 삭제
     public static void deleteStudent(ArrayList<Student> data) {
-        Scanner scanner = new Scanner(System.in);
+        
         System.out.print("학번 입력> ");
-        String studentId = scanner.nextLine();
+        String studentId = RCManagement.input.nextLine();
 
         Student student = Student.getStudent(data, studentId);
 
@@ -110,14 +105,14 @@ public class Menu {
             data.remove(student);
             System.out.println("삭제 완료!");
         }
-        scanner.close();
+        
     }
 
     // 4번 학생 정보수정.
     public static void editStudent(ArrayList<Student> data) {
-        Scanner scanner = new Scanner(System.in);
+        
         System.out.print("학번 입력> ");
-        String studentId = scanner.nextLine();
+        String studentId = RCManagement.input.nextLine();
 
         Student student = Student.getStudent(data, studentId);
 
@@ -126,7 +121,7 @@ public class Menu {
         } else {
             student.edit();
         }
-        scanner.close();
+        
     }
 
     // 5번

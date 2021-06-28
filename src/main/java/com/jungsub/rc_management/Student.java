@@ -3,8 +3,6 @@ package com.jungsub.rc_management;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class Student {
     private String name, studentId, roomNumber, penaltyPoints, semester;
@@ -51,19 +49,17 @@ public class Student {
 
     public void edit() {
         int rc;
-        Scanner scanner = new Scanner(System.in);
-
         System.out.print("Name? ");
-        this.name = scanner.nextLine();
+        this.name = RCManagement.input.nextLine();
 
         System.out.print("StudentId? ");
-        this.studentId = scanner.nextLine();
+        this.studentId = RCManagement.input.nextLine();
 
         System.out.print("RoomNumber? ");
-        this.roomNumber = scanner.nextLine();
+        this.roomNumber = RCManagement.input.nextLine();
 
         System.out.print("PenaltyPoints? ");
-        this.penaltyPoints = scanner.nextLine();
+        this.penaltyPoints = RCManagement.input.nextLine();
 
         System.out.println("Select RC");
         for (int i = 0; i < RC.values().length; i++) {
@@ -72,7 +68,7 @@ public class Student {
         while (true) {
             try {
                 System.out.print("숫자 입력? ");
-                rc = Integer.parseInt(scanner.nextLine());
+                rc = Integer.parseInt(RCManagement.input.nextLine());
                 if (rc > RC.values().length) {
                     System.out.println("범위 초과.");
                     continue;
@@ -83,7 +79,6 @@ public class Student {
             }
         }
         this.rc = RC.values()[rc];
-        scanner.close();
     }
 
     public static Student getStudent(ArrayList<Student> data, String studentId) {

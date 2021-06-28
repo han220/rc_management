@@ -1,8 +1,11 @@
 package com.jungsub.rc_management;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class RCManagement {
+    public static Scanner input = new Scanner(System.in);
+
     private static ArrayList<Student> datas = new ArrayList<>();
     public static void main(String[] args) {
         int menu = -1;
