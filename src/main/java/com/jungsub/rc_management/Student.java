@@ -78,7 +78,7 @@ public class Student {
                 System.out.println("숫자가 아닙니다.");
             }
         }
-        this.rc = RC.values()[rc];
+        this.rc = RC.values()[rc - 1];
     }
 
     public static Student getStudent(ArrayList<Student> data, String studentId) {

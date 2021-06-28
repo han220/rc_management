@@ -67,7 +67,7 @@ public class Menu {
             }
         }
         
-        return new Student(name, studentId, roomNumber, penaltyPoints, "2021-2", RC.values()[rc]);
+        return new Student(name, studentId, roomNumber, penaltyPoints, "2021-2", RC.values()[rc - 1]);
     }
 
     // 2번 기존 학생 확인
