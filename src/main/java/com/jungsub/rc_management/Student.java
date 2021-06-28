@@ -47,49 +47,31 @@ public class Student {
         return rc;
     }
 
-    public void edit() {
-        int rc;
-        System.out.print("Name? ");
-        this.name = RCManagement.input.nextLine();
-
-        System.out.print("StudentId? ");
-        this.studentId = RCManagement.input.nextLine();
-
-        System.out.print("RoomNumber? ");
-        this.roomNumber = RCManagement.input.nextLine();
-
-        System.out.print("PenaltyPoints? ");
-        this.penaltyPoints = RCManagement.input.nextLine();
-
-        System.out.println("Select RC");
-        for (int i = 0; i < RC.values().length; i++) {
-            System.out.println(i + 1 + ". " + RC.values()[i].name);
-        }
-        while (true) {
-            try {
-                System.out.print("숫자 입력? ");
-                rc = Integer.parseInt(RCManagement.input.nextLine());
-                if (rc > RC.values().length) {
-                    System.out.println("범위 초과.");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("숫자가 아닙니다.");
-            }
-        }
-        this.rc = RC.values()[rc - 1];
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static Student getStudent(ArrayList<Student> data, String studentId) {
-        for(Student student : data) {
-            if(student.getStudentId().trim().equals(studentId.trim())) return student;
-        }
-        return null;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
-//    public void print() {
-//        System.out.println()
-//    }
+    public void setPenaltyPoints(String penaltyPoints) {
+        this.penaltyPoints = penaltyPoints;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setRc(RC rc) {
+        this.rc = rc;
+    }
 }
