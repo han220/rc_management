@@ -73,13 +73,13 @@ public class Menu {
     // 2번 기존 학생 확인
     public static Student checkStudent(ArrayList<Student> data) {
         System.out.print("학번 입력> ");
-        RCManagement.input.next(); // Clear buffer
         String studentId = RCManagement.input.nextLine();
 
         Student student = Student.getStudent(data, studentId);
 
         if (student == null) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
+            return null;
         }
 
         // 출력
@@ -88,6 +88,7 @@ public class Menu {
         st.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
 
         st.addRow(student.getName(), student.getStudentId(), student.getRc().name, student.getRoomNumber(), student.getPenaltyPoints(), student.getSemester(), student.getCreatedAt().toString());
+        st.print();
         return student;
     }
 

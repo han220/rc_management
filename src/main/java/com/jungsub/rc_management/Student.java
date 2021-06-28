@@ -83,7 +83,7 @@ public class Student {
 
     public static Student getStudent(ArrayList<Student> data, String studentId) {
         for(Student student : data) {
-            if(student.getStudentId().equals(studentId)) return student;
+            if(student.getStudentId().trim().equals(studentId.trim())) return student;
         }
         return null;
     }
