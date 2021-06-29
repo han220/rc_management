@@ -22,3 +22,9 @@
 ## 모든 학생 보기
 
 <img width="833" alt="image" src="https://user-images.githubusercontent.com/69412357/123590356-7d268c80-d825-11eb-949f-8d4b205434d8.png">
+
+## 검색기능
+
+<img width="825" alt="image" src="https://user-images.githubusercontent.com/69412357/123599628-c8926800-d830-11eb-881f-9f43c13be9df.png">
+
+<img width="821" alt="image" src="https://user-images.githubusercontent.com/69412357/123599651-ce884900-d830-11eb-9cdd-d46b665164e7.png">
