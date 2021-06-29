@@ -1,5 +1,6 @@
 package com.jungsub.rc_management;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,10 +8,23 @@ import java.util.Scanner;
 public class RCManagement {
     public static Scanner input = new Scanner(System.in);
 
-    private static ArrayList<Student> datas = new ArrayList<>();
+    private static ArrayList<Student> datas;
 
     public static void main(String[] args) {
         int menu = -1;
+        // Load data
+        try {
+            datas = FileManager.load("students.dat");
+        } catch(FileNotFoundException e) {
+            System.out.println("파일이 없습니다.");
+        }
+        catch (Exception e) {
+            System.out.println("파일을 읽는 과정에 오류가 발생했습니다.");
+            datas = null;
+        } finally {
+            if (datas == null) datas = new ArrayList<>();
+        }
+
         while (menu != 0) {
             Menu.getMenu();
             menu = Menu.getMenuId();
@@ -33,6 +47,9 @@ public class RCManagement {
                     break;
                 case 6:
                     Menu.masterSearch(datas);
+                    break;
+                case 7:
+                    Menu.save(datas);
                     break;
             }
         }

@@ -2,6 +2,7 @@ package com.jungsub.rc_management;
 
 import com.jungsub.rc_management.assets.CommandLineTable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Menu {
@@ -13,6 +14,7 @@ public class Menu {
         System.out.println("4. 학생 정보 수정");
         System.out.println("5. 모든 학생 보기");
         System.out.println("6. 검색");
+        System.out.println("7. 저장");
         System.out.println("0. 나가기");
         System.out.println("============= RC MANAGEMENT =============");
     }
@@ -240,6 +242,17 @@ public class Menu {
         }
         s.setRc(RC.values()[rc - 1]);
     }
+
+    public static void save(ArrayList<Student> datas) {
+        try {
+            FileManager.save("students.dat", datas.toArray(new Student[0]));
+            System.out.println("저장완료!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     //
 }

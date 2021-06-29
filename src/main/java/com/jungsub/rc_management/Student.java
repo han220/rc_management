@@ -1,10 +1,11 @@
 package com.jungsub.rc_management;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Student {
+public class Student implements Serializable {
     private String name, studentId, roomNumber, penaltyPoints, semester;
     private Timestamp createdAt;
     private RC rc;
