@@ -1,7 +1,10 @@
 package com.jungsub.rc_management;
 
+import com.jungsub.rc_management.db.DBManager;
+
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +14,7 @@ public class RCManagement {
     private static ArrayList<Student> datas;
 
     public static void main(String[] args) {
+        DBManager.startDb();
         int menu = -1;
         // Load data
         try {
@@ -53,6 +57,11 @@ public class RCManagement {
                     break;
             }
         }
+        try {
+            DBManager.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     // Default StudentID
@@ -65,19 +74,19 @@ public class RCManagement {
         for (Student student : data) {
             switch (st) {
                 case STUDENTID:
-                    if (student.getStudentId().trim().equals(search.trim())) result.add(student);
+                    if (String.valueOf(student.getStudentId()).equals(search.trim())) result.add(student);
                     break;
                 case NAME:
                     if (student.getName().trim().contains(search.trim())) result.add(student);
                     break;
                 case ROOMNUMBER:
-                    if (student.getRoomNumber().trim().equals(search.trim())) result.add(student);
+                    if (String.valueOf(student.getRoomNumber()).equals(search.trim())) result.add(student);
                     break;
                 case PENALITYPOINT:
-                    if (student.getPenaltyPoints().trim().equals(search.trim())) result.add(student);
+                    if (String.valueOf(student.getPenaltyPoints()).equals(search.trim())) result.add(student);
                     break;
                 case RC:
-                    if (student.getRc().name.trim().equals(search.trim())) result.add(student);
+                    if (student.RC().name.trim().equals(search.trim())) result.add(student);
                     break;
             }
         }

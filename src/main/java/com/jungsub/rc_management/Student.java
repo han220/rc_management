@@ -1,78 +1,93 @@
 package com.jungsub.rc_management;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Student implements Serializable {
-    private String name, studentId, roomNumber, penaltyPoints, semester;
-    private Timestamp createdAt;
-    private RC rc;
+    private String name, semester, rc;
+    private int studentId, roomNumber, penaltyPoints;
+    Date date;
 
     public Student(String name, String studentId, String roomNumber, String penaltyPoints, String semester, RC rc) {
         this.name = name;
+        this.studentId = Integer.parseInt(studentId);
+        this.roomNumber = Integer.parseInt(roomNumber);
+        this.penaltyPoints = Integer.parseInt(penaltyPoints);
+        this.semester = semester;
+        this.rc = rc.toString();
+    }
+
+    public Student(String name, String semester, String rc, int studentId, int roomNumber, int penaltyPoints, Date date) {
+        this.name = name;
+        this.semester = semester;
+        this.rc = rc;
         this.studentId = studentId;
         this.roomNumber = roomNumber;
         this.penaltyPoints = penaltyPoints;
-        this.semester = semester;
-        this.rc = rc;
-        createdAt = new Timestamp(new Date().getTime());
+        this.date = date;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public String getPenaltyPoints() {
-        return penaltyPoints;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSemester() {
         return semester;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public RC getRc() {
-        return rc;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public void setPenaltyPoints(String penaltyPoints) {
-        this.penaltyPoints = penaltyPoints;
-    }
-
     public void setSemester(String semester) {
         this.semester = semester;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public String getRc() {
+        return rc;
     }
 
-    public void setRc(RC rc) {
+    public RC RC() {
+        for(RC rc : RC.values())
+            if(rc.toString().equals(this.rc)) return rc;
+      return null;
+    }
+
+    public void setRc(String rc) {
         this.rc = rc;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public int getPenaltyPoints() {
+        return penaltyPoints;
+    }
+
+    public void setPenaltyPoints(int penaltyPoints) {
+        this.penaltyPoints = penaltyPoints;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

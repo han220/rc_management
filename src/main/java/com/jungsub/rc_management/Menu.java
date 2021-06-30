@@ -1,8 +1,10 @@
 package com.jungsub.rc_management;
 
 import com.jungsub.rc_management.assets.CommandLineTable;
+import org.apache.ibatis.io.Resources;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 
 public class Menu {
@@ -55,8 +57,25 @@ public class Menu {
         System.out.println("Select RC");
         rc = viewRC();
 
+        // Save to db
+        Student student = Student(name, studentId, roomNumber, penaltyPoints, "2021-2", RC.values()[rc - 1];
+        Reader rd = null;
+        try {
+            rd = Resources.getResourceAsReader("SqlMapConfig.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SqlMapClient smc = SqlMapClientBuilder.buildSqlMapClient(rd);
 
-        return new Student(name, studentId, roomNumber, penaltyPoints, "2021-2", RC.values()[rc - 1]);
+        /* This would insert one record in Employee table. */
+        System.out.println("Going to insert record.....");
+        Employee em = new Employee("Zara", "Ali", 5000);
+
+        smc.insert("Employee.insert", em);
+
+        System.out.println("Record Inserted Successfully ");
+
+        return student;
     }
 
     // 2번 기존 학생 확인
@@ -80,7 +99,8 @@ public class Menu {
         st.setShowVerticalLines(true);
         st.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
 
-        st.addRow(student.getName(), student.getStudentId(), student.getRc().name, student.getRoomNumber(), student.getPenaltyPoints(), student.getSemester(), student.getCreatedAt().toString());
+        // TODO: Created Date
+        st.addRow(student.getName(), String.valueOf(student.getStudentId()), student.RC().name, String.valueOf(student.getRoomNumber()), String.valueOf(student.getPenaltyPoints()), student.getSemester(), "null");
         st.print();
         return student;
     }
@@ -143,7 +163,8 @@ public class Menu {
         st.setShowVerticalLines(true);
         st.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
         for (Student s : data) {
-            st.addRow(s.getName(), s.getStudentId(), s.getRc().name, s.getRoomNumber(), s.getPenaltyPoints(), s.getSemester(), s.getCreatedAt().toString());
+            // TODO: created Date
+            st.addRow(s.getName(), String.valueOf(s.getStudentId()), s.RC().name, String.valueOf(s.getRoomNumber()), String.valueOf(s.getPenaltyPoints()), s.getSemester(), "null");
         }
         st.print();
     }
@@ -182,7 +203,8 @@ public class Menu {
         clt.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
 
         for(Student s : RCManagement.getStudent(data, st, keyword)) {
-            clt.addRow(s.getName(), s.getStudentId(), s.getRc().name, s.getRoomNumber(), s.getPenaltyPoints(), s.getSemester(), s.getCreatedAt().toString());
+            // Todo: Current Time
+            clt.addRow(s.getName(), String.valueOf(s.getStudentId()), s.RC().name, String.valueOf(s.getRoomNumber()), String.valueOf(s.getPenaltyPoints()), s.getSemester(), "null");
         }
         clt.print();
 
@@ -215,13 +237,13 @@ public class Menu {
         s.setName(RCManagement.input.nextLine());
 
         System.out.print("StudentId? ");
-        s.setStudentId(RCManagement.input.nextLine());
+        s.setStudentId(getInt());
 
         System.out.print("RoomNumber? ");
-        s.setRoomNumber(RCManagement.input.nextLine());
+        s.setRoomNumber(getInt());
 
         System.out.print("PenaltyPoints? ");
-        s.setPenaltyPoints(RCManagement.input.nextLine());
+        s.setPenaltyPoints(getInt());
 
         System.out.println("Select RC");
         for (int i = 0; i < RC.values().length; i++) {
@@ -240,7 +262,20 @@ public class Menu {
                 System.out.println("숫자가 아닙니다.");
             }
         }
-        s.setRc(RC.values()[rc - 1]);
+        s.setRc(RC.values()[rc - 1].toString());
+    }
+
+    private static int getInt() {
+        int result;
+        while (true) {
+            try {
+                result = Integer.parseInt(RCManagement.input.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("숫자가 아닙니다.");
+            }
+        }
+        return result;
     }
 
     public static void save(ArrayList<Student> datas) {
