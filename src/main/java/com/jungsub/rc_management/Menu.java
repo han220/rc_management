@@ -3,6 +3,8 @@ package com.jungsub.rc_management;
 import com.jungsub.rc_management.assets.CommandLineTable;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Menu {
@@ -60,11 +62,11 @@ public class Menu {
     }
 
     // 2번 기존 학생 확인
-    public static Student checkStudent(ArrayList<Student> data) {
+    public static Student checkStudent(DatabaseManager dm) {
         System.out.print("학번 입력> ");
         String studentId = RCManagement.input.nextLine();
 
-        Student[] result = RCManagement.getStudent(data, studentId);
+        Student[] result = RCManagement.getStudent(dm, studentId);
         if (result.length == 0) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
             return null;
@@ -86,12 +88,12 @@ public class Menu {
     }
 
     // 3번 학생 삭제
-    public static void deleteStudent(ArrayList<Student> data) {
+    public static void deleteStudent(DatabaseManager dm) {
 
         System.out.print("학번 입력> ");
         String studentId = RCManagement.input.nextLine();
 
-        Student[] result = RCManagement.getStudent(data, studentId);
+        Student[] result = RCManagement.getStudent(dm, studentId);
         if (result.length == 0) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
             return;
@@ -105,19 +107,29 @@ public class Menu {
         if (student == null) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
         } else {
-            data.remove(student);
-            System.out.println("삭제 완료!");
+//            data.remove(student);
+            final String DELETE_SQL = "DELETE FROM Student WHERE studentId = ? ";
+            try {
+                PreparedStatement pstmt = dm.getConn().prepareStatement(DELETE_SQL);
+                pstmt.setObject(1, student.getStudentId());
+                pstmt.executeUpdate();
+                System.out.println("삭제 완료!");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                System.out.println("삭제 오류");
+            }
+
         }
 
     }
 
     // 4번 학생 정보수정.
-    public static void editStudent(ArrayList<Student> data) {
+    public static void editStudent(DatabaseManager dm) {
 
         System.out.print("학번 입력> ");
         String studentId = RCManagement.input.nextLine();
 
-        Student[] result = RCManagement.getStudent(data, studentId);
+        Student[] result = RCManagement.getStudent(dm, studentId);
         if (result.length == 0) {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
             return;
@@ -132,23 +144,24 @@ public class Menu {
             System.out.println("경고! 학생을 찾을 수 없습니다.");
         } else {
             editOneStudent(student);
+            RCManagement.upsertStudent(dm, student, true);
         }
 
     }
 
     // 5번
 
-    public static void viewStudents(ArrayList<Student> data) {
+    public static void viewStudents(DatabaseManager dm) {
         CommandLineTable st = new CommandLineTable();
         st.setShowVerticalLines(true);
         st.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
-        for (Student s : data) {
+        for (Student s : RCManagement.getStudent(dm, null, null)) {
             st.addRow(s.getName(), s.getStudentId(), s.getRc().name, s.getRoomNumber(), s.getPenaltyPoints(), s.getSemester(), s.getCreatedAt().toString());
         }
         st.print();
     }
 
-    public static void masterSearch(ArrayList<Student> data) {
+    public static void masterSearch(DatabaseManager dm) {
         int searchType;
 
         for (int i = 0; i < RCManagement.SearchType.values().length; i++) {
@@ -181,7 +194,7 @@ public class Menu {
         clt.setShowVerticalLines(true);
         clt.setHeaders("이름", "학번", "기숙사", "방번호", "벌점", "학기", "생성시간");
 
-        for(Student s : RCManagement.getStudent(data, st, keyword)) {
+        for(Student s : RCManagement.getStudent(dm, st, keyword)) {
             clt.addRow(s.getName(), s.getStudentId(), s.getRc().name, s.getRoomNumber(), s.getPenaltyPoints(), s.getSemester(), s.getCreatedAt().toString());
         }
         clt.print();
