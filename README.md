@@ -28,3 +28,9 @@
 <img width="825" alt="image" src="https://user-images.githubusercontent.com/69412357/123599628-c8926800-d830-11eb-881f-9f43c13be9df.png">
 
 <img width="821" alt="image" src="https://user-images.githubusercontent.com/69412357/123599651-ce884900-d830-11eb-9cdd-d46b665164e7.png">
+
+## 저장
+
+7번을 눌러 저장하면 다음에 프로그램을 켤 때 자동을 불러옵니다.
+
+바이너리 저장 방시 이용.
