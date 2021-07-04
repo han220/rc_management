@@ -71,7 +71,7 @@ public class RCManagement {
                         "WHERE studentId = ?");
             } else {
                 pstmt = dm.getConn().prepareStatement("INSERT INTO Student (" +
-                        "studentId, name, roomNumber, penaltyPoints, semester, rc) " +
+                        "name, roomNumber, penaltyPoints, semester, rc, studentId) " +
                         "VALUES (?, ?, ?, ?, ?, ?)");
             }
             // 입력된 학생 데이터 추가

@@ -227,8 +227,8 @@ public class Menu {
         System.out.print("Name? ");
         s.setName(RCManagement.input.nextLine());
 
-        System.out.print("StudentId? ");
-        s.setStudentId(RCManagement.input.nextLine());
+//        System.out.print("StudentId? ");
+//        s.setStudentId(RCManagement.input.nextLine());
 
         System.out.print("RoomNumber? ");
         s.setRoomNumber(RCManagement.input.nextLine());

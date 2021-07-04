@@ -1,10 +1,13 @@
 package com.jungsub.rc_management;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Student implements Serializable {
     private String name, studentId, roomNumber, penaltyPoints, semester;
@@ -71,7 +74,11 @@ public class Student implements Serializable {
     }
 
     public Timestamp getCreatedAt() {
-        return createdAt;
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(createdAt.getTime()));
+//        c.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        c.add(Calendar.HOUR, 9);
+        return new Timestamp(c.getTime().getTime());
     }
 
     public RC getRc() {
